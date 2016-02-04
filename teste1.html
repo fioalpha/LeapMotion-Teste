@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Teste LeapMotion</title>
+	</head>
+
+	<body>
+	<div class="leap_Frame"></div>
+
+
+		<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+		<script src="leap-0.6.4.js"></script>
+		<script type="text/javascript" src="leap-plugins-0.1.6.js"></script>
+
+		<script type="text/javascript">
+
+			/*$(document).ready(function(){
+				Leap.loop(function(frame){
+					console.log("teste"+frame.currentFrameRate);
+
+					var frameString = "<p>Frame Id: "+frame.id+" TimeStamp: "+frame.timestamp+"</p>";
+					frameString += '<p>Hangs: '+frame.hands.length+'</p>';
+					frameString += '<p>Fingers: '+frame.fingers.length+'</p>';
+					frameString += '<p>Tools: '+frame.tools.length+'</p>';
+					frameString += '<p>Gestures: '+frame.gestures.length+'</p>';
+					$(".leap_Frame").empty().append(frameString);
+
+					var previous = 
+
+					if(frameString){
+						console.log('welkhlkhe');
+					} else {
+						console.log('previous frame false');
+					}
+
+				}).use('screenPosition', {scale: 0.25});
+
+
+				Leap.loopController.setBackground(true);
+			});*/
+
+			var controller = new Leap.Controller({
+				enableGesture: true,
+				frameEventName: 'animationFrame'
+			});
+
+
+			controller.on('frame', function(frame){
+				var frameString = "<p>Frame Id: "+frame.id+" TimeStamp: "+frame.timestamp+"</p>";
+					frameString += '<p>Hangs: '+frame.hands.length+'</p>';
+					frameString += '<p>Fingers: '+frame.fingers.length+'</p>';
+					frameString += '<p>Tools: '+frame.tools.length+'</p>';
+					frameString += '<p>Gestures: '+frame.gestures.length+'</p>';
+					$(".leap_Frame").empty().append(frameString);
+			});
+			controller.connect();
+			//alert("dskhfkld");
+			
+		</script>
+	</body>
+</html> 
+
+
