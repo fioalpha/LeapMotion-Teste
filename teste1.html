@@ -7,14 +7,93 @@
 	</head>
 
 	<body>
-	<div class="leap_Frame"></div>
+		<div class="leap_Frame"></div>
+		<div class="leap_fingers"></div>
 
-
-		<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+		<!--<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.0.min.js"></script>-->
 		<script src="leap-0.6.4.js"></script>
 		<script type="text/javascript" src="leap-plugins-0.1.6.js"></script>
 
 		<script type="text/javascript">
+
+			var controler = Leap.loop({
+				gesture:true,
+				//frameEventName:'deviceFrame',
+				frameEventName:'animationFrame',
+				background:true,
+				useAllPlugins: true
+				}).use('screenPosition',{scale:1}).use('handEntry');
+
+			controler.on('gesture', function(gesture, frame){
+				console.log(gesture);
+			});
+
+			controler.on('frame',function(frame){
+				//console.log('Gesture', frame);
+				var hands = frame.hands;
+
+				/*if(frame.valid && frame.hands.length > 0){
+					console.log(hands[0]);
+				}*/
+
+				/*if(gesture.type == 'swipe'){
+				 //Classify swipe as either horizontal or vertical
+				 var isHorizontal = Math.abs(gesture.direction[0]) > Math.abs(gesture.direction[1]);
+				 //Classify as right-left or up-down
+				 if(isHorizontal){
+				 if(gesture.direction[0] > 0){
+				 swipeDirection = "right";
+				 } else {
+				 swipeDirection = "left";
+				 }
+				 } else { //vertical
+				 if(gesture.direction[1] > 0){
+				 swipeDirection = "up";
+				 } else {
+				 swipeDirection = "down";
+				 }
+				 }
+				 console.log(swipeDirection)
+				 }*/
+			});
+
+			controler.connect()
+			/*$(document).ready(function(){
+				var controler = Leap.loop({gesture:true,hand:function(hand){
+
+					//var positionAll = hand.screenPosition(hand.palmPosition)
+
+					//console.log(positionAll[0].toPrecision(4) +" Velocidade"+ hand.palmVelocity[0]+" Grab "+hand.grabStrength);
+					//console.log(controler.gesture());
+
+				}}).use('screenPosition',{scale:1});
+
+				controler.on('frame', function(frame){
+					console.log('Gesture', frame.hands);
+
+					/*if(gesture.type == 'swipe'){
+						//Classify swipe as either horizontal or vertical
+						var isHorizontal = Math.abs(gesture.direction[0]) > Math.abs(gesture.direction[1]);
+						//Classify as right-left or up-down
+						if(isHorizontal){
+							if(gesture.direction[0] > 0){
+								swipeDirection = "right";
+							} else {
+								swipeDirection = "left";
+							}
+						} else { //vertical
+							if(gesture.direction[1] > 0){
+								swipeDirection = "up";
+							} else {
+								swipeDirection = "down";
+							}
+						}
+						console.log(swipeDirection)
+					}
+				});
+
+				controler.connect()
+			})*/
 
 			/*$(document).ready(function(){
 				Leap.loop(function(frame){
@@ -41,7 +120,7 @@
 				Leap.loopController.setBackground(true);
 			});*/
 
-			var controller = new Leap.Controller({
+			/*var controller = new Leap.Controller({
 				enableGesture: true,
 				frameEventName: 'animationFrame'
 			});
@@ -54,9 +133,32 @@
 					frameString += '<p>Tools: '+frame.tools.length+'</p>';
 					frameString += '<p>Gestures: '+frame.gestures.length+'</p>';
 					$(".leap_Frame").empty().append(frameString);
+
+				console.log("numero de dedos", frame.fingers.length);
+
+				for(var i=0; i< frame.fingers.length; i++){
+
+				}
+
+				frame.gestures.forEach(function(gesture){
+					switch(gesture.type){
+						 case "circle":
+				              console.log("Circle Gesture");
+				              break;
+				         case "keyTap":
+				              console.log("Key Tap Gesture");
+				              break;
+				         case "screenTap":
+				              console.log("Screen Tap Gesture");
+				              break;
+				         case "swipe":
+				              console.log("Swipe Gesture");
+				              break;
+					}
+				});
 			});
 			controller.connect();
-			//alert("dskhfkld");
+			//alert("dskhfkld");*/
 			
 		</script>
 	</body>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fingers Draws</title>
+</head>
+<body>
+
+<canvas id="canvas" height="600" width="800" style="border:1px solid #000"></canvas>
+
+
+<script src="leap-0.6.4.js"></script>
+<script type="text/javascript">
+    var canvas = document.getElementById("canvas");
+    var ctx = canvas.getContext("2d");
+
+    var indexQuantidade = 0;
+
+    var colorLine = ["#000","#F00", "#0F0","#00F"];
+
+    var xPositionAnterior = 0.0;
+    var yPositionAnterior = 0.0;
+
+
+    Leap.loop(function(frame){
+        if(frame.pointables.length >0 ) {
+            var fingers = frame.pointables[3].stabilizedTipPosition;
+            var normalized = frame.interactionBox.normalizePoint(fingers);
+            console.log(fingers);
+
+            var x = ctx.canvas.width * normalized[0];
+            var y = ctx.canvas.height * (1 - normalized[1]);
+            var z = normalized[2];
+
+            console.log("X: "+x+" Y: "+y+" Z: "+fingers[2]);
+            if(fingers[2] < 0.0){
+                console.log("z");
+                drawLine(x, y);
+            }else{
+                console.log("0.0");
+               xPositionAnterior = 0.0;
+               yPositionAnterior = 0.0;
+
+                indexQuantidade = Math.floor(Math.random()*colorLine.length);
+            }
+        }
+
+    });
+
+    function drawLine(xPosition, yPosition){
+
+        if(xPositionAnterior == 0.0 && yPositionAnterior == 0){
+            console.log("primeira vez");
+            xPositionAnterior = xPosition;
+            yPositionAnterior = yPosition;
+            ctx.moveTo(xPositionAnterior, yPositionAnterior);
+        }
+        ctx.lineTo(xPosition, yPosition);
+        ctx.strokeStyle = colorLine[indexQuantidade];
+        ctx.stroke();
+    }
+</script>
+</body>
+</html>
